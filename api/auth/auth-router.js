@@ -11,7 +11,6 @@ router.post('/register', validBody, newUser, async (req, res) => {
   const body = req.body;
   const rounds = process.env.BCRYPT_ROUNDS || 12;
     try {
-      console.log('reqistering');
       const hash = bcrypt.hashSync(body.password, rounds)
       const newUser = await User.addUser({ username: body.username, password: hash })
       res.status(201).json(newUser)
@@ -22,7 +21,6 @@ router.post('/register', validBody, newUser, async (req, res) => {
 
 router.post('/login', validBody, validUser, async  (req, res) => {
   const body = req.body
-    console.log('logging in');
     const verifies = await bcrypt.compareSync(body.password, req.userData.password)
     if(verifies) {
       const token = makeToken(req.userData)
