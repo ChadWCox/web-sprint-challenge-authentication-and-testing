@@ -19,9 +19,9 @@ router.post('/register', validBody, newUser, async (req, res) => {
     }
 });
 
-router.post('/login', validBody, validUser,  (req, res) => {
+router.post('/login', validBody, validUser, async  (req, res) => {
   const body = req.body
-    const verifies = bcrypt.compareSync(body.password, req.userData.password)
+    const verifies = await bcrypt.compareSync(body.password, req.userData.password)
     if(verifies) {
       const token = makeToken(req.userData)
       res.status(200).json({ message: `welcome, ${req.userData.username}`, token})
