@@ -8,9 +8,9 @@ module.exports = async (req, res, next) => {
         req.userData = rows[0]
         next()
       } else {
-        res.status(401).json("invalid credentials")
+        res.status(401).json({ message: "invalid credentials" })
       }
     } catch (err) {
-      res.status(500).json("invalid credentials")
+      res.status(500).json({ message: "invalid credentials" })
     }
   }

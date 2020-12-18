@@ -7,9 +7,9 @@ module.exports = async (req, res, next) => {
       if (!rows.length) {
         next()
       } else {
-        res.status(401).json("username taken")
+        res.status(401).json({ message: "username taken" })
       }
     } catch (e) {
-      res.status(500).json(e.message)
+      res.status(500).json({ message: e.message })
     }
   }
