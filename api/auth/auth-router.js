@@ -11,7 +11,7 @@ router.post('/register', validBody, newUser, async (req, res) => {
   const body = req.body;
   const rounds = process.env.BCRYPT_ROUNDS || 12;
     try {
-      const hash = await bcrypt.hashSync(body.password, rounds)
+      const hash = bcrypt.hashSync(body.password, rounds)
       const newUser = await User.addUser({ username: body.username, password: hash })
       res.status(201).json(newUser)
     } catch (e) {
@@ -19,9 +19,9 @@ router.post('/register', validBody, newUser, async (req, res) => {
     }
 });
 
-router.post('/login', validBody, validUser, async  (req, res) => {
+router.post('/login', validBody, validUser,  (req, res) => {
   const body = req.body
-    const verifies = await bcrypt.compareSync(body.password, req.userData.password)
+    const verifies = bcrypt.compareSync(body.password, req.userData.password)
     if(verifies) {
       const token = makeToken(req.userData)
       res.status(200).json({ message: `welcome, ${req.userData.username}`, token})
