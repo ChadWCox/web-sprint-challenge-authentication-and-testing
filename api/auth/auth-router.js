@@ -7,12 +7,12 @@ const validUser = require('../middleware/checkUser.js');
 const makeToken = require('../middleware/token-maker.js');
 
 
-router.post('/register', validBody, newUser, async (req, res) => {
+router.post('/register', validBody, newUser, (req, res) => {
   const body = req.body;
   const rounds = process.env.BCRYPT_ROUNDS || 12;
     try {
       const hash = bcrypt.hashSync(body.password, rounds)
-      const newUser = await User.addUser({ username: body.username, password: hash })
+      const newUser = User.addUser({ username: body.username, password: hash })
       res.status(201).json(newUser)
     } catch (e) {
       res.status(500).json(e.message)
